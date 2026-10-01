@@ -1,50 +1,152 @@
-<!DOCTYPE html>
-<html lang = "en">
-<meta charset="UTF-8">
-<title>ADSR_Works</title>
-</head>
-<body>
-
-    <button> Play</button>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ADSR_Works</title>
+  </head>
+  <body>
+    <button id="button1">Play</button>
+    <button id="button2">Play</button>
+    <button id="button3">Play</button>
+    <button id="button4">Play</button>
 
     <script>
-        function playNote(someContext, frequency, duration)
-        {
-            const osc1 = new OscillatorNode(someContext);
-            const osc2 = new OscillatorNode(someContext);
-            const gain = new GainNode(someContext);
-        
-            
-            osc1.frequency.value = frequency;
-            osc2.frequency.value = frequency*2.01;
-            osc1.type = "triangle"
-            osc2.type = "triangle"
-            gain.gain.value = 0;
+      const myCtx = new AudioContext();
 
-            osc1.connect(gain).connect(someContext.destination);
-            osc2.connect(gain).connect(someContext.destination);
+      function playNote1(someContext, frequency, dur) {
+        const osc1 = new OscillatorNode(someContext);
+        const osc2 = new OscillatorNode(someContext);
+        const gain1 = new GainNode(someContext);
 
-            let now = someContext.currentTime;
+        osc1.frequency.value = frequency;
+        osc2.frequency.value = frequency * 1.1;
+        osc1.type = "triangle";
+        osc2.type = "triangle";
+        gain1.gain.value = 0;
 
-            gain.gain.linearRampToValueAtTime(0.30, now + 0.01); //attack
-            gain.gain.linearRampToValueAtTime(0.10, now + 0.01 + 0.08) //decay
-            gain.gain.linearRampToValueAtTime(0.30, now + 0.01 + 0.08 + 0.9)
-            gain.gain.linearRampToValueAtTime(0, now + duration); //release
+        osc1.connect(gain1).connect(someContext.destination);
+        osc2.connect(gain1).connect(someContext.destination);
 
-            osc1.start();
-            osc1.stop(now + duration);
+        let now = someContext.currentTime;
 
-            osc2.start();
-            osc2.stop(now + duration);
+        gain1.gain.linearRampToValueAtTime(0.4, now + dur * 0.1); //attack
+        gain1.gain.linearRampToValueAtTime(0.15, now + dur * 0.2); //decay
+        gain1.gain.linearRampToValueAtTime(0.15, now + dur * 0.99);
+        gain1.gain.linearRampToValueAtTime(0, now + dur); //release
 
-        }
+        osc1.start(now);
+        osc1.stop(now + dur);
 
-        const myCtx = new AudioContext();
-        let freq = 220
+        osc2.start(now);
+        osc2.stop(now + dur);
+      }
 
-        document.querySelector("button").onclick = () => playNote(myCtx, freq, 1);
+      let freq1 = 220;
+      let dur1 = 4;
+
+      document.querySelector("#button1").onclick = () =>
+        playNote1(myCtx, freq1, dur1);
+
+      function playNote2(someContext, frequency, dur) {
+        const osc3 = new OscillatorNode(someContext);
+        const osc4 = new OscillatorNode(someContext);
+        const gain2 = new GainNode(someContext);
+
+        osc3.frequency.value = frequency;
+        osc4.frequency.value = frequency * 0.1;
+        osc3.type = "triangle";
+        osc4.type = "triangle";
+        gain2.gain.value = 0;
+
+        osc3.connect(gain2).connect(someContext.destination);
+        osc4.connect(gain2).connect(someContext.destination);
+
+        let now = someContext.currentTime;
+
+        gain2.gain.linearRampToValueAtTime(0.4, now + 0.05); //attack
+        gain2.gain.linearRampToValueAtTime(0.15, now + 0.15); //decay
+        gain2.gain.linearRampToValueAtTime(0.15, now + dur - 0.2);
+        gain2.gain.linearRampToValueAtTime(0, now + dur); //release
+
+        osc3.start(now);
+        osc3.stop(now + dur);
+
+        osc4.start(now);
+        osc4.stop(now + dur);
+      }
+
+      let freq2 = 1000;
+      let dur2 = 2;
+
+      document.querySelector("#button2").onclick = () =>
+        playNote2(myCtx, freq2, dur2);
+
+      function playNote3(someContext, frequency, dur) {
+        const osc5 = new OscillatorNode(someContext);
+        const osc6 = new OscillatorNode(someContext);
+        const gain3 = new GainNode(someContext);
+
+        osc5.frequency.value = frequency;
+        osc6.frequency.value = frequency * 0.99;
+        osc5.type = "triangle";
+        osc6.type = "triangle";
+        gain3.gain.value = 0;
+
+        osc5.connect(gain3).connect(someContext.destination);
+        osc6.connect(gain3).connect(someContext.destination);
+
+        let now = someContext.currentTime;
+
+        gain3.gain.linearRampToValueAtTime(0.4, now + 0.05); //attack
+        gain3.gain.linearRampToValueAtTime(0.15, now + 0.15); //decay
+        gain3.gain.linearRampToValueAtTime(0.15, now + dur - 0.2);
+        gain3.gain.linearRampToValueAtTime(0, now + dur); //release
+
+        osc5.start(now);
+        osc5.stop(now + dur);
+
+        osc6.start(now);
+        osc6.stop(now + dur);
+      }
+
+      let freq3 = 11000;
+      let dur3 = 3;
+      document.querySelector("#button3").onclick = () =>
+        playNote3(myCtx, freq3, dur3);
+
+      function playNote4(someContext, frequency, duration) {
+        const osc7 = new OscillatorNode(someContext);
+        const osc8 = new OscillatorNode(someContext);
+        const gain4 = new GainNode(someContext);
+
+        osc7.frequency.value = frequency;
+        osc8.frequency.value = frequency * 1.01;
+        osc7.type = "triangle";
+        osc8.type = "triangle";
+        gain4.gain.value = 0;
+
+        osc7.connect(gain4).connect(someContext.destination);
+        osc8.connect(gain4).connect(someContext.destination);
+
+        let now = someContext.currentTime;
+
+        gain4.gain.linearRampToValueAtTime(0.4, now + 0.05); //attack
+        gain4.gain.linearRampToValueAtTime(0.15, now + 0.15); //decay
+        gain4.gain.linearRampToValueAtTime(0.15, now + duration - 0.2);
+        gain4.gain.linearRampToValueAtTime(0, now + duration); //release
+
+        osc7.start(now);
+        osc7.stop(now + duration);
+
+        osc8.start(now);
+        osc8.stop(now + duration);
+      }
+
+      let freq4 = 60;
+      let dur4 = 3;
+
+      document.querySelector("#button4").onclick = () =>
+        playNote4(myCtx, freq4, dur4);
     </script>
-    
-</body>
-
+  </body>
 </html>
